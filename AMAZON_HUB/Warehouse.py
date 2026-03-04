@@ -42,3 +42,17 @@ class WarehouseInventory:
         idx = self.get_aisle_index(category)
         packages = self.shelves[idx]
         return idx, packages
+
+    def remove_specific_package(self, pkg_id: str) -> bool:
+        """
+        Remove a package by its exact ID from whichever aisle it lives in.
+        Returns True if found and removed, False otherwise.
+        Used by the priority-based truck loader so it can pull the exact
+        packages it already scored and sorted
+        """
+        for aisle in self.shelves:  # self.shelves is a list of lists
+            for i, pkg in enumerate(aisle):
+                if pkg["id"] == pkg_id:
+                    aisle.pop(i)
+                    return True
+        return False
