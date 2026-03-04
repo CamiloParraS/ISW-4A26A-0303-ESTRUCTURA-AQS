@@ -35,5 +35,5 @@ class Truck:
         return len(self.stack) >= self.max_capacity
 
     def all_items(self):
-        # Return with top-of-stack first, reversed for display
+        # Return with top-of-stack first (reversed for display)
         return list(reversed(self.stack))
