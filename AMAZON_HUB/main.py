@@ -39,15 +39,6 @@ BG_CARD  = "#1E2330"
 #  CATEGORIES  (Shelf positions are INDEX-based → Array concept)
 # ==============================================================
 CATEGORIES = ["Electronics", "Clothing", "Food", "Books", "Toys", "Appliances"]
-CATEGORY_ICONS = {
-    "Electronics": "⚡",
-    "Clothing":    "",
-    "Food":        "",
-    "Books":       "",
-    "Toys":        "",
-    "Appliances":  "",
-}
-
 DESTINATIONS = ["Downtown", "North Zone", "South Zone", "Airport", "Mall", "Port"]
 
 
@@ -365,7 +356,6 @@ class AmazonHubSimulator(QMainWindow):
         form.addWidget(self._lbl("Category:"), 1, 0)
         self.combo_category = QComboBox()
         for cat in CATEGORIES:
-            icon = CATEGORY_ICONS[cat]
             self.combo_category.addItem(f"{icon}  {cat}")
         form.addWidget(self.combo_category, 1, 1)
 
@@ -437,7 +427,6 @@ class AmazonHubSimulator(QMainWindow):
         shelf_row.addWidget(self._lbl("Check Shelf:"))
         self.combo_check_shelf = QComboBox()
         for cat in CATEGORIES:
-            icon = CATEGORY_ICONS[cat]
             self.combo_check_shelf.addItem(f"{icon}  {cat}")
         shelf_row.addWidget(self.combo_check_shelf, stretch=1)
 
@@ -467,7 +456,6 @@ class AmazonHubSimulator(QMainWindow):
         self.shelf_widgets = {}   
 
         for i, cat in enumerate(CATEGORIES):
-            icon = CATEGORY_ICONS[cat]
             row_frame = QFrame()
             row_frame.setObjectName("panel")
             row_v = QVBoxLayout(row_frame)
@@ -691,7 +679,6 @@ class AmazonHubSimulator(QMainWindow):
         category = cat_text.split("  ", 1)[1]
 
         idx, packages = self.warehouse.check_shelf(category)
-        icon = CATEGORY_ICONS[category]
 
         if not packages:
             result = f"  Aisle [{idx}]  {icon} {category}  —  EMPTY"
@@ -844,7 +831,6 @@ class AmazonHubSimulator(QMainWindow):
         self.lbl_queue_count.setText(f"{len(items)} orders")
 
         for i, order in enumerate(items):
-            icon = CATEGORY_ICONS[order["category"]]
             prefix = "→ " if i == 0 else f"  {i+1}. "
             text = (
                 f"{prefix}{order['id']}  |  {order['name']}"
@@ -858,7 +844,6 @@ class AmazonHubSimulator(QMainWindow):
 
         front = self.order_queue.peek()
         if front:
-            icon = CATEGORY_ICONS[front["category"]]
             self.lbl_queue_front.setText(
                 f"{front['id']} — {front['name']} [{icon} {front['category']}]"
             )
@@ -885,7 +870,6 @@ class AmazonHubSimulator(QMainWindow):
 
         for i, pkg in enumerate(items):
             dest = pkg.get("destination", "?")
-            icon = CATEGORY_ICONS[pkg["category"]]
             prefix = "▶ TOP  " if i == 0 else f"   {i+1}.    "
             text = (
                 f"{prefix}{pkg['id']}  |  {pkg['name']}"
