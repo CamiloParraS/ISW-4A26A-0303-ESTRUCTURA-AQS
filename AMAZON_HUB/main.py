@@ -433,7 +433,6 @@ class AmazonHubSimulator(QMainWindow):
         ))
         layout.addWidget(make_separator())
 
-        # ── Check Shelf ──
         shelf_row = QHBoxLayout()
         shelf_row.addWidget(self._lbl("Check Shelf:"))
         self.combo_check_shelf = QComboBox()
@@ -465,7 +464,7 @@ class AmazonHubSimulator(QMainWindow):
         shelf_grid.setSpacing(8)
         shelf_grid.setContentsMargins(0, 4, 0, 4)
 
-        self.shelf_widgets = {}   # category → (count_lbl, list_widget)
+        self.shelf_widgets = {}   
 
         for i, cat in enumerate(CATEGORIES):
             icon = CATEGORY_ICONS[cat]
