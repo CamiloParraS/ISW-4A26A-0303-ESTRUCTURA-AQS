@@ -356,7 +356,7 @@ class AmazonHubSimulator(QMainWindow):
         form.addWidget(self._lbl("Category:"), 1, 0)
         self.combo_category = QComboBox()
         for cat in CATEGORIES:
-            self.combo_category.addItem(f"{icon}  {cat}")
+            self.combo_category.addItem(f"  {cat}")
         form.addWidget(self.combo_category, 1, 1)
 
         layout.addLayout(form)
@@ -427,7 +427,7 @@ class AmazonHubSimulator(QMainWindow):
         shelf_row.addWidget(self._lbl("Check Shelf:"))
         self.combo_check_shelf = QComboBox()
         for cat in CATEGORIES:
-            self.combo_check_shelf.addItem(f"{icon}  {cat}")
+            self.combo_check_shelf.addItem(f"  {cat}")
         shelf_row.addWidget(self.combo_check_shelf, stretch=1)
 
         btn_check = QPushButton("  Check Shelf")
@@ -463,7 +463,7 @@ class AmazonHubSimulator(QMainWindow):
             row_v.setSpacing(4)
 
             title_row = QHBoxLayout()
-            aisle_lbl = QLabel(f"[{i}]  {icon} {cat}")
+            aisle_lbl = QLabel(f"[{i}]   {cat}")
             count_lbl = QLabel("0 pkgs")
 
             title_row.addWidget(aisle_lbl)
@@ -569,15 +569,6 @@ class AmazonHubSimulator(QMainWindow):
 
         layout.addWidget(make_separator())
 
-        # ── Optimization info ──
-        opt_lbl = QLabel(
-            "⚡ Optimization: Packages are loaded in destination order.\n"
-            "   Use 'Deliver All for Stop' to unload only the current\n"
-            "   stop's packages without re-sorting the whole truck."
-        )
-        opt_lbl.setWordWrap(True)
-        layout.addWidget(opt_lbl)
-
         # ── Stack list ──
         stack_hdr = QHBoxLayout()
         stack_hdr.addWidget(self._lbl("Stack Contents  (top = next off):"))
@@ -681,12 +672,12 @@ class AmazonHubSimulator(QMainWindow):
         idx, packages = self.warehouse.check_shelf(category)
 
         if not packages:
-            result = f"  Aisle [{idx}]  {icon} {category}  —  EMPTY"
+            result = f"  Aisle [{idx}]   {category}  —  EMPTY"
         else:
             names = ", ".join([p["name"] for p in packages[:3]])
             more = f" +{len(packages)-3} more" if len(packages) > 3 else ""
             result = (
-                f"  Aisle [{idx}]  {icon} {category}\n"
+                f"  Aisle [{idx}]   {category}\n"
                 f"   {len(packages)} package(s): {names}{more}"
             )
 
@@ -834,7 +825,7 @@ class AmazonHubSimulator(QMainWindow):
             prefix = "→ " if i == 0 else f"  {i+1}. "
             text = (
                 f"{prefix}{order['id']}  |  {order['name']}"
-                f"  [{icon} {order['category']}]"
+                f"  [ {order['category']}]"
             )
             item = QListWidgetItem(text)
             if i == 0:
@@ -845,7 +836,7 @@ class AmazonHubSimulator(QMainWindow):
         front = self.order_queue.peek()
         if front:
             self.lbl_queue_front.setText(
-                f"{front['id']} — {front['name']} [{icon} {front['category']}]"
+                f"{front['id']} — {front['name']} [ {front['category']}]"
             )
         else:
             self.lbl_queue_front.setText("Queue is empty")
@@ -873,7 +864,7 @@ class AmazonHubSimulator(QMainWindow):
             prefix = "▶ TOP  " if i == 0 else f"   {i+1}.    "
             text = (
                 f"{prefix}{pkg['id']}  |  {pkg['name']}"
-                f"  [{icon} {pkg['category']}]  → {dest}"
+                f"  [ {pkg['category']}]  → {dest}"
             )
             item = QListWidgetItem(text)
             if i == 0:
